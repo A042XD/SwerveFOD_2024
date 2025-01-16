@@ -34,8 +34,6 @@ public class FieldOrientedDrive extends Command{
 
         // Field Oriented
         double rot = -(360 - swerveSub.getYaw().getDegrees()) * 3.14 / 180;
-        // double forward = yv;
-        // double strafe = xv;
         double forward = yv * Math.cos(rot) - xv * Math.sin(rot);
         double strafe = yv * Math.sin(rot) + xv * Math.cos(rot);
         forward = forward * swerveSub.maximumSpeed;
