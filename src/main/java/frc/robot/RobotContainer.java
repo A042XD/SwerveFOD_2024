@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.FieldOrientedDrive;
 import frc.robot.commands.SnapToDirection;
@@ -22,7 +21,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer {
     XboxController driver = new XboxController(0);
-    Joystick rotDriver = new Joystick(1);
+    // Joystick rotDriver = new Joystick(1);
 
     JoystickButton driverA = new JoystickButton(driver, 1);
     JoystickButton driverB = new JoystickButton(driver, 2);
@@ -38,15 +37,15 @@ public class RobotContainer {
           swerveSub,
           () -> MathUtil.applyDeadband(driver.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
           () -> MathUtil.applyDeadband(driver.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-          () -> MathUtil.applyDeadband(-rotDriver.getX(), OperatorConstants.ROTATION_DEADBAND),
+          () -> MathUtil.applyDeadband(-driver.getRightX(), OperatorConstants.ROTATION_DEADBAND),
           () -> true);
         swerveSub.setDefaultCommand(xBoxTeleopDrive);
     }
 
     private void configureBindings() {
       driverX.onTrue(Commands.runOnce(swerveSub::zeroGyro));
-      new Trigger(() -> driver.getPOV() != -1)
-        .whileTrue(new SnapToDirection(swerveSub, new Rotation2d(driver.getPOV() * 3.14 / 180), () -> true));
+      // new Trigger(() -> driver.getPOV() != -1)
+      //   .whileTrue(new SnapToDirection(swerveSub, new Rotation2d(driver.getPOV() * 3.14 / 180), () -> true));
       // driverA.whileTrue(new SnapToDirection(swerveSub, new Rotation2d(0), () -> true));
       // driverB.whileTrue(new SnapToDirection(swerveSub, new Rotation2d(90 * Math.PI / 180), () -> true));
       // driverX.whileTrue(new SnapToDirection(swerveSub, new Rotation2d(180 * Math.PI / 180), () -> true));
